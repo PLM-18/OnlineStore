@@ -3,10 +3,10 @@
 ## Screenshots
 
 <p align="center">
-  <img src="assets/screenshot_1.png" width="200" />
-  <img src="assets/screenshot_2.png" width="200" />
-  <img src="assets/screenshot_3.png" width="200" />
-  <img src="assets/screenshot_4.png" width="200" />
+  <img src="Assets/screenshot_1.png" width="200" />
+  <img src="Assets/screenshot_2.png" width="200" />
+  <img src="Assets/screenshot_3.png" width="200" />
+  <img src="Assets/screenshot_4.png" width="200" />
 </p>
 
 ---
