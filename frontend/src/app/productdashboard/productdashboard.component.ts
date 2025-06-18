@@ -34,12 +34,12 @@ interface ProductByType {
 export class ProductdashboardComponent implements OnInit {
   topExpensiveProducts: Product[] = [];
   isLoading: boolean = true;
-  
-  constructor(private reportService: ReportingService) {}
+
+  constructor(private reportService: ReportingService) { }
 
   ngOnInit(): void {
     Chart.register(...registerables);
-    
+
     // Get products grouped by brand for pie chart
     this.reportService.getProductsGroupedByBrand().subscribe({
       next: (data) => {
@@ -73,14 +73,12 @@ export class ProductdashboardComponent implements OnInit {
     });
   }
 
-  // Render pie chart for product count by brand
   renderBrandPieChart(data: ProductByBrand[]): void {
     if (!data || data.length === 0) return;
-    
+
     const labels = data.map(item => item.brand);
     const counts = data.map(item => item.count);
-    
-    // Define colors for pie slices
+
     const backgroundColors = [
       '#FF9999', // Light pink
       '#99CCFF', // Light blue
@@ -121,7 +119,7 @@ export class ProductdashboardComponent implements OnInit {
           },
           tooltip: {
             callbacks: {
-              label: function(context) {
+              label: function (context) {
                 return `${context.label}: ${context.parsed} (${Math.round((context.parsed / context.dataset.data.reduce((a, b) => Number(a) + Number(b), 0)) * 100)}%)`;
               }
             }
@@ -133,10 +131,10 @@ export class ProductdashboardComponent implements OnInit {
 
   renderTypePieChart(data: ProductByType[]): void {
     if (!data || data.length === 0) return;
-    
+
     const labels = data.map(item => item.type);
     const counts = data.map(item => item.count);
-    
+
     const backgroundColors = [
       '#FF9999', // Light pink
       '#99CCFF', // Light blue
@@ -176,7 +174,7 @@ export class ProductdashboardComponent implements OnInit {
           },
           tooltip: {
             callbacks: {
-              label: function(context) {
+              label: function (context) {
                 return `${context.label}: ${context.parsed} (${Math.round((context.parsed / context.dataset.data.reduce((a, b) => Number(a) + Number(b), 0)) * 100)}%)`;
               }
             }
@@ -185,18 +183,17 @@ export class ProductdashboardComponent implements OnInit {
       }
     });
   }
-  
+
   darkenColor(color: string, amount: number): string {
-    // Convert hex to RGB
     const hex = color.replace('#', '');
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
-    
+
     const darkenR = Math.max(0, r - amount);
     const darkenG = Math.max(0, g - amount);
     const darkenB = Math.max(0, b - amount);
-    
+
     return `#${darkenR.toString(16).padStart(2, '0')}${darkenG.toString(16).padStart(2, '0')}${darkenB.toString(16).padStart(2, '0')}`;
   }
 }

@@ -26,15 +26,15 @@ export class ProductlistingComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   displayedProducts: Product[] = [];
-  
+
   filterText: string = '';
   sortColumn: string = 'name';
   sortDirection: 'asc' | 'desc' = 'asc';
-  
+
   itemsPerPage: number = 5;
   currentPage: number = 1;
   totalPages: number = 1;
-  
+
   apiUrl = 'https://localhost:7121/api/Store';
 
   constructor(
@@ -44,8 +44,7 @@ export class ProductlistingComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
-    
-    // Check if a success message was passed from add product page
+
     const message = history.state.successMessage;
     if (message) {
       this.showNotification(message);
@@ -72,7 +71,7 @@ export class ProductlistingComponent implements OnInit {
       this.filteredProducts = [...this.products];
     } else {
       const searchTerm = this.filterText.toLowerCase();
-      this.filteredProducts = this.products.filter(product => 
+      this.filteredProducts = this.products.filter(product =>
         product.name.toLowerCase().includes(searchTerm) ||
         product.description.toLowerCase().includes(searchTerm) ||
         product.brand.name.toLowerCase().includes(searchTerm) ||
@@ -80,7 +79,7 @@ export class ProductlistingComponent implements OnInit {
         product.price.toString().includes(searchTerm)
       );
     }
-    
+
     this.sortProducts();
     this.currentPage = 1;
     this.updateDisplayedProducts();
@@ -89,8 +88,7 @@ export class ProductlistingComponent implements OnInit {
   sortProducts(): void {
     this.filteredProducts.sort((a, b) => {
       let valueA, valueB;
-      
-      // Determine which property to sort by
+
       switch (this.sortColumn) {
         case 'name':
           valueA = a.name.toLowerCase();
@@ -116,7 +114,7 @@ export class ProductlistingComponent implements OnInit {
           valueA = a.name.toLowerCase();
           valueB = b.name.toLowerCase();
       }
-      
+
       // Apply sort direction
       if (this.sortDirection === 'asc') {
         return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
@@ -124,27 +122,25 @@ export class ProductlistingComponent implements OnInit {
         return valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
       }
     });
-    
+
     this.updateDisplayedProducts();
   }
 
   changeSort(column: string): void {
     if (this.sortColumn === column) {
-      // Toggle direction if clicking the same column
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
-      // Default to ascending if clicking a new column
       this.sortColumn = column;
       this.sortDirection = 'asc';
     }
-    
+
     this.sortProducts();
   }
 
   updateDisplayedProducts(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = Math.min(startIndex + this.itemsPerPage, this.filteredProducts.length);
-    
+
     this.displayedProducts = this.filteredProducts.slice(startIndex, endIndex);
     this.totalPages = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
   }
