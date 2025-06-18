@@ -28,8 +28,6 @@ This project is an online shop web application that displays statistics on the m
 - Add new products
 - View stats on most bought products (Chart.js)
 
-**Note:** The app only allows string passwords. Using a non-string password will result in an error.
-
 ---
 
 ## Requirements
