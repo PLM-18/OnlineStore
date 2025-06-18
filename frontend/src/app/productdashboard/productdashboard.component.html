@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="section-header">
+    <h3>Top Sales</h3>
+  </div>
+
+  <div class="row charts-section mb-4">
+    <div class="col-md-6">
+      <div class="text-center mb-3">Product Count by Brands</div>
+      <div class="chart-container">
+        <canvas id="brandPieChart"></canvas>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="text-center mb-3">Product Count by Product Type</div>
+      <div class="chart-container">
+        <canvas id="typePieChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="card top-products">
+    <div class="card-body">
+      <h5 class="mb-4">Top 10 most expensive products</h5>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Brand</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of topExpensiveProducts">
+              <td>{{ product.name }}</td>
+              <td>{{ product.price | currency }}</td>
+              <td>{{ product.brand.name }}</td>
+              <td>{{ product.productType.name }}</td>
+              <td class="product-description" title="{{ product.description }}">{{ product.description }}</td>
+            </tr>
+            <!-- If no products are loaded yet, show placeholder rows -->
+            <tr *ngIf="topExpensiveProducts.length === 0">
+              <td colspan="5" class="text-center py-4">Loading products data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

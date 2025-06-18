@@ -1,0 +1,54 @@
+<div class="login-container">
+  <div class="login-content">
+    <div class="logo-section">
+      <img src="assets/images/logo.jpeg" alt="Logo" class="logo">
+      <span class="logo-text">Online Clothing Store</span>
+    </div>
+
+    <div class="login-form">
+      <h2>Log in</h2>
+
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <div class="form-group">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email address"
+            name="email"
+            [(ngModel)]="loginModel.email"
+            required>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            name="password"
+            [(ngModel)]="loginModel.password"
+            required>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
+        <button type="submit" class="login-btn" [disabled]="isLoading || !loginForm.form.valid">
+          <span *ngIf="!isLoading">LOGIN</span>
+          <span *ngIf="isLoading">LOGGING IN...</span>
+        </button>
+      </form>
+
+      <div class="form-links">
+        <a href="#" class="forgot-password">Forgot password?</a>
+        <div class="register-link">
+            Don't have an account? <a routerLink="/register">Register here</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="image-section">
+    <img src="assets/images/stockimage2.jpeg" alt="Stock image" class="stock-image">
+  </div>
+</div>

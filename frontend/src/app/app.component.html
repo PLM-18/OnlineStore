@@ -1,0 +1,25 @@
+<div class="app-container" [ngClass]="{'no-sidebar': isAuthPage()}">
+  <div class="sidebar" *ngIf="!isAuthPage()">
+    <div class="sidebar-header">
+      <h2>Product System</h2>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/product-listing" routerLinkActive="active">Product Listing</a>
+      </li>
+      <li>
+        <a routerLink="/add-product" routerLinkActive="active">Add Product</a>
+      </li>
+      <li>
+        <a routerLink="/product-dashboard" routerLinkActive="active">Product Dashboard</a>
+      </li>
+      <li>
+        <a routerLink="/login" class="logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="main-content" [ngClass]="{'full-width': isAuthPage()}">
+    <router-outlet></router-outlet>
+  </div>
+</div>

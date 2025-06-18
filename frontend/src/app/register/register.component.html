@@ -1,0 +1,59 @@
+<div class="login-container">
+  <div class="login-content">
+    <div class="logo-section">
+      <img src="assets/images/logo.jpeg" alt="Logo" class="logo">
+      <span class="logo-text">Online Clothing Store</span>
+    </div>
+
+    <div class="login-form">
+      <h2>Register</h2>
+
+      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+        <div class="form-group">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email address"
+            name="email"
+            [(ngModel)]="registerModel.email"
+            required
+            email>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            name="password"
+            [(ngModel)]="registerModel.password"
+            required
+            minlength="6">
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
+        <div *ngIf="successMessage" class="success-message">
+          {{ successMessage }}
+        </div>
+
+        <button type="submit" class="login-btn" [disabled]="isLoading || !registerForm.form.valid">
+          <span *ngIf="!isLoading">REGISTER</span>
+          <span *ngIf="isLoading">REGISTERING...</span>
+        </button>
+      </form>
+
+      <div class="form-links">
+        <div class="register-link">
+          Already have an account? <a routerLink="/login">Login here</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="image-section">
+    <img src="assets/images/stockimage.jpeg" alt="Stock image" class="stock-image">
+  </div>
+</div>

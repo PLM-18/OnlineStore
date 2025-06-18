@@ -1,0 +1,135 @@
+<div class="container">
+  <h2>Add New Product</h2>
+  
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+    <div class="form-group">
+      <label for="image">Product Image *</label>
+      <div class="image-upload-container">
+        <div class="image-preview" *ngIf="imagePreview">
+          <img [src]="imagePreview" alt="Preview">
+        </div>
+        <div class="upload-button-container">
+          <label for="image-upload" class="upload-button">
+            Upload Image
+          </label>
+          <input 
+            type="file" 
+            id="image-upload" 
+            accept="image/*" 
+            (change)="onFileSelected($event)" 
+            required
+            #fileInput
+          >
+          <div class="help-text" *ngIf="!imagePreview">No image selected</div>
+        </div>
+      </div>
+      <div class="error-message" *ngIf="!imagePreview && productForm.touched">
+        Please select an image for the product
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="name">Product Name *</label>
+      <input 
+        type="text" 
+        id="name" 
+        formControlName="name" 
+        placeholder="Enter product name"
+        [class.invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched"
+      >
+      <div class="error-message" *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+        <span *ngIf="productForm.get('name')?.errors?.['required']">
+          Product name is required
+        </span>
+        <span *ngIf="productForm.get('name')?.errors?.['maxlength']">
+          Product name cannot exceed 100 characters
+        </span>
+      </div>
+    </div>
+    
+    <!-- Price -->
+    <div class="form-group">
+      <label for="price">Price (ZAR) *</label>
+      <input 
+        type="number" 
+        id="price" 
+        formControlName="price" 
+        placeholder="0.00" 
+        step="0.01" 
+        min="0"
+        [class.invalid]="productForm.get('price')?.invalid && productForm.get('price')?.touched"
+      >
+      <div class="error-message" *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+        <span *ngIf="productForm.get('price')?.errors?.['required']">
+          Price is required
+        </span>
+        <span *ngIf="productForm.get('price')?.errors?.['min']">
+          Price must be greater than or equal to 0
+        </span>
+        <span *ngIf="productForm.get('price')?.errors?.['pattern']">
+          Price must be a valid number with up to 2 decimal places
+        </span>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="description">Description *</label>
+      <textarea 
+        id="description" 
+        formControlName="description" 
+        placeholder="Enter product description"
+        rows="4"
+        [class.invalid]="productForm.get('description')?.invalid && productForm.get('description')?.touched"
+      ></textarea>
+      <div class="error-message" *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched">
+        Description is required
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="brand">Brand *</label>
+      <select 
+        id="brand" 
+        formControlName="brand"
+        [class.invalid]="productForm.get('brand')?.invalid && productForm.get('brand')?.touched"
+      >
+        <option value="" disabled>Select Brand</option>
+        <option *ngFor="let brand of brands" [value]="brand.brandId">
+          {{ brand.name }}
+        </option>
+      </select>
+      <div class="error-message" *ngIf="productForm.get('brand')?.invalid && productForm.get('brand')?.touched">
+        Please select a brand
+      </div>
+    </div>
+    
+    <!-- Product Type -->
+    <div class="form-group">
+      <label for="producttype">Product Type *</label>
+      <select 
+        id="producttype" 
+        formControlName="producttype"
+        [class.invalid]="productForm.get('producttype')?.invalid && productForm.get('producttype')?.touched"
+      >
+        <option value="" disabled>Select Product Type</option>
+        <option *ngFor="let type of productTypes" [value]="type.productTypeId">
+          {{ type.name }}
+        </option>
+      </select>
+      <div class="error-message" *ngIf="productForm.get('producttype')?.invalid && productForm.get('producttype')?.touched">
+        Please select a product type
+      </div>
+    </div>
+    
+    <div class="form-actions">
+      <button type="button" routerLink="/product-listing" class="cancel-button">Cancel</button>
+      <button 
+        type="submit" 
+        class="submit-button" 
+        [disabled]="submitting || productForm.invalid || !imagePreview"
+      >
+        {{ submitting ? 'Submitting...' : 'Submit' }}
+      </button>
+    </div>
+  </form>
+</div>

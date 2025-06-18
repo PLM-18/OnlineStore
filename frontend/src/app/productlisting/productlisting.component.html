@@ -1,0 +1,106 @@
+<div class="container">
+  <h2>Product Listing</h2>
+  
+  <div class="filter-container">
+    <input 
+      type="text" 
+      placeholder="Filter products..." 
+      [(ngModel)]="filterText"
+      (input)="applyFilter()"
+      class="filter-input"
+    >
+  </div>
+  
+  <div class="table-container">
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th (click)="changeSort('name')" class="sortable">
+            Name
+            <span *ngIf="sortColumn === 'name'" class="sort-icon">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th (click)="changeSort('price')" class="sortable">
+            Price
+            <span *ngIf="sortColumn === 'price'" class="sort-icon">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th (click)="changeSort('brand')" class="sortable">
+            Brand
+            <span *ngIf="sortColumn === 'brand'" class="sort-icon">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th (click)="changeSort('productType')" class="sortable">
+            Product Type
+            <span *ngIf="sortColumn === 'productType'" class="sort-icon">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+          <th (click)="changeSort('description')" class="sortable">
+            Description
+            <span *ngIf="sortColumn === 'description'" class="sort-icon">
+              {{ sortDirection === 'asc' ? '▲' : '▼' }}
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of displayedProducts">
+          <td class="image-cell">
+            <img [src]="'data:image/jpeg;base64,' + product.image" alt="{{ product.name }}" class="product-image">
+          </td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price | currency:'ZAR':'symbol':'1.2-2' }}</td>
+          <td>{{ product.brand.name }}</td>
+          <td>{{ product.productType.name }}</td>
+          <td>{{ product.description }}</td>
+        </tr>
+        <tr *ngIf="displayedProducts.length === 0">
+          <td colspan="6" class="no-products">No products found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Pagination -->
+  <div class="pagination-container">
+    <div class="items-per-page">
+      Items per page:
+      <select [(ngModel)]="itemsPerPage" (change)="changeItemsPerPage(itemsPerPage)">
+        <option [value]="3">3</option>
+        <option [value]="5">5</option>
+        <option [value]="10">10</option>
+      </select>
+    </div>
+    
+    <div class="pagination-controls">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">
+        &lt;
+      </button>
+      
+      <span *ngFor="let page of [].constructor(totalPages); let i = index">
+        <button 
+          [class.active]="currentPage === i + 1"
+          (click)="goToPage(i + 1)">
+          {{ i + 1 }}
+        </button>
+      </span>
+      
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+        &gt;
+      </button>
+    </div>
+    
+    <div class="page-info">
+      {{ currentPage }} of {{ totalPages }}
+    </div>
+  </div>
+  
+  <div class="add-product-container">
+    <button routerLink="/add-product" class="add-product-btn">Add New Product</button>
+  </div>
+</div>
