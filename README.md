@@ -9,7 +9,7 @@
   <img src="Assets/screenshot_4.png" width="200" />
 </p>
 
-▶️ [[View the interactive carousel here](https://PLM-18.github.io/OnlineShop/)
+▶️ [View the interactive carousel here](https://plm-18.github.io/OnlineStore/)
 
 ---
 
